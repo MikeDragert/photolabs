@@ -62,9 +62,10 @@ const PhotoList = () => {
     return sampleDataForPhotoList.map((photo) => {
       return <PhotoListItem photoItem = {{
         id: photo.id,
-        username: photo.user.useername,
+        username: photo.user.username,
         location: photo.location,
-        imageSource: photo.urls.regular
+        imageSource: photo.urls.regular,
+        profile: photo.user.profile
       }} key={photo.id}/>
     }); 
   }
