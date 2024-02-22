@@ -8,7 +8,7 @@ const HomeRoute = () => {
   return (
     <div className="home-route">
       <TopNavigation />
-      <PhotoList className="home-route"/>
+      <PhotoList />
     </div>
   );
 };
