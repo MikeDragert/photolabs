@@ -21,7 +21,7 @@ const App = () => {
   return (
     <div className="App">
       <HomeRoute setDisplayModel={setDisplayModel}/>
-      {!displayPhotoDetails.empty && <PhotoDetailsModel photoDetails={displayPhotoDetails} setDisplayModel={() => setDisplayModel()}/>}
+      {!displayPhotoDetails.empty && <PhotoDetailsModel photoDetails={displayPhotoDetails.photoDetails} setDisplayModel={() => setDisplayModel()}/>}
     </div>
   );
 };
