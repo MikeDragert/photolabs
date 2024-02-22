@@ -11,7 +11,7 @@ const PhotoList = (props) => {
       location: photo.location,
       imageSource: photo.urls.regular,
       profile: photo.user.profile
-    }} key={photo.id} toggleFavourite={() => props.toggleLikedPhoto(photo.id)} selected={photo.liked}/>
+    }} key={photo.id} toggleLikedPhoto={() => props.toggleLikedPhoto(photo.id)} selected={photo.liked}/>
   }); 
   
   return (
