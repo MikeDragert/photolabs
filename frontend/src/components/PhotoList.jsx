@@ -5,13 +5,7 @@ import PhotoListItem from "./PhotoListItem";
 
 const PhotoList = (props) => {
   const photoList = props.photos.map((photo) => {
-    return <PhotoListItem photoItem = {{
-      id: photo.id,
-      username: photo.user.username,
-      location: photo.location,
-      imageSource: photo.urls.regular,
-      profile: photo.user.profile
-    }} key={photo.id} toggleLikedPhoto={() => props.toggleLikedPhoto(photo.id)} selected={photo.liked} setDisplayModel={props.setDisplayModel}/>
+    return <PhotoListItem photoItem = {photo} key={photo.id} toggleLikedPhoto={() => props.toggleLikedPhoto(photo.id)} selected={photo.liked} setDisplayModel={props.setDisplayModel}/>
   }); 
   
   return (

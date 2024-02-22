@@ -8,19 +8,20 @@ import './styles/HomeRoute.scss'
 
 // Note: Rendering a single component to build components in isolation
 const App = () => {  
-  const [showModel, setShowModel] = useState(false);
-  const setDisplayModel = function(photoId) {
-    if (photoId) {
-      setShowModel(true);
+  const intitialState = {empty: true};
+  const [displayPhotoDetails, setDisplayPhotoDetails] = useState(intitialState);
+  const setDisplayModel = function(photoDetails) {
+    if (photoDetails) {
+      setDisplayPhotoDetails({empty: false, photoDetails});
     } else {
-      setShowModel(false);
+      setDisplayPhotoDetails(intitialState);
     }
   }
 
   return (
     <div className="App">
       <HomeRoute setDisplayModel={setDisplayModel}/>
-      {showModel && <PhotoDetailsModel setDisplayModel={() => setDisplayModel()}/>}
+      {!displayPhotoDetails.empty && <PhotoDetailsModel photoDetails={displayPhotoDetails} setDisplayModel={() => setDisplayModel()}/>}
     </div>
   );
 };
