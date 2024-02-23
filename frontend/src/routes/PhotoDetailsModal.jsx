@@ -6,18 +6,18 @@ import PhotoFavButton from '../components/PhotoFavButton';
 import PhotoList from '../components/PhotoList';
 
 const PhotoDetailsModal = (props) => {
-  let displayPhoto = props.photos.find((photo) => {
-    return photo.id === props.photoDetailId
+  let displayPhoto = props.state.photos.find((photo) => {
+    return photo.id === props.state.photoSelected
   });
 
   return (
     <article className="photo-details-modal">
-      <button className="photo-details-modal__close-button" onClick={props.setDisplayModel}>
+      <button className="photo-details-modal__close-button" onClick={props.onClosePhotoDetailsModal}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
       
       <div className='photo-details-modal__images'>
-        <PhotoFavButton selected={props.likedPhotos[displayPhoto.id]} toggleLikedPhoto={() => props.toggleLikedPhoto(displayPhoto.id)}/>
+        <PhotoFavButton selected={props.state.likedPhotos[displayPhoto.id]} updateToFavPhotoIds={() => props.updateToFavPhotoIds(displayPhoto.id)}/>
         <img src={displayPhoto.urls.full} alt="image" className='photo-details-modal__image' />
         <div className="photo-details-modal__photographer-details">
           <img src={displayPhoto.user.profile} alt="profile image" className="photo-details-modal__photographer-profile" />
@@ -31,7 +31,7 @@ const PhotoDetailsModal = (props) => {
           <h1>Similar Photos</h1>
         </div>
         <div className='photo-details-modal__images'>
-          <PhotoList photos={Object.values(displayPhoto.similar_photos)} toggleLikedPhoto={props.toggleLikedPhoto} likedPhotos={props.likedPhotos} />
+          <PhotoList state={props.state} updateToFavPhotoIds={props.updateToFavPhotoIds} setPhotoSelected={() => {}} />
         </div>
       </div>
     </article>
