@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import photos from '../mocks/photos';
 
 // Note: Rendering a single component to build components in isolation
@@ -11,25 +11,35 @@ const useApplicationData = () => {
     likedPhotos: {},
     photoSelected: undefined
   }
-  const [state, setState] = useState(initialState);
+
+  const reducer = function(state, action) {
+    let newState = {...state};
+    switch (action.type) {
+      case "UpdateFavPhotos":
+        let newLikedPhotos = {...state.likedPhotos};
+        newLikedPhotos[action.value] = newLikedPhotos[action.value] ? false : true;
+        newState.likedPhotos = newLikedPhotos;
+        return newState;
+      case "SetPhotoSelected":
+        newState.photoSelected = action.value;
+        return newState;
+      default:
+        return newState;
+      }
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   const updateToFavPhotoIds = function(id) {
-    let newLikedPhotos = {...state.likedPhotos};
-    newLikedPhotos[id] = newLikedPhotos[id] ? false : true;
-    let newState= {...state, likedPhotos: newLikedPhotos};
-    setState(newState);
+    dispatch({type: "UpdateFavPhotos", value: id});
   }
 
   const setPhotoSelected = function(photoDetailsId) {
-    if (photoDetailsId) {      
-      let newState = {...state, photoSelected: photoDetailsId};
-      setState(newState);
-    }
+    dispatch({type: "SetPhotoSelected", value: photoDetailsId})
   }
-
+  
   const onClosePhotoDetailsModal = function() {
-    let newState = {...state, photoSelected: undefined};
-    setState(newState);
+    dispatch({type: "SetPhotoSelected", value: undefined})
   }
    
   return {
