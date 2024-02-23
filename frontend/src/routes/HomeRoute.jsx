@@ -7,10 +7,9 @@ import topics from '../mocks/topics';
 import '../styles/HomeRoute.scss';
 
 const HomeRoute = (props) => {
-  
   return (
     <div className="home-route">
-      <TopNavigation topics={topics} photos={props.photos}/>
+      <TopNavigation topics={topics} photos={props.photos} likedPhotos={props.likedPhotos}/>
       <PhotoList {...props} />
     </div>
   );

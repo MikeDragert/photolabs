@@ -5,8 +5,8 @@ import FavBadge from './FavBadge';
 import '../styles/TopNavigationBar.scss'
 
 const TopNavigation = (props) => {  
-  let photosLiked = props.photos.reduce((oneLiked, photo) => {
-    return oneLiked || photo.liked;
+  let photosLiked = Object.values(props.likedPhotos).reduce((oneLiked, liked) => {
+    return oneLiked || liked;
   }, false);
 
   return (

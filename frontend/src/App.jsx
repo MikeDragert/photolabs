@@ -13,17 +13,13 @@ const App = () => {
   const initialPhotos = [...photos];
 
   const [photosData, setPhotosData] = useState(initialPhotos);
+  const [likedPhotos, setLikedPhotos] = useState({});
 
   const toggleLikedPhoto = function(id) {
-    let newPhotosData = photosData.map((photo) => {
-       photo.liked = photo.id === id 
-        ? !photo.liked : 
-        photo.liked;
-       return photo;
-    })
-    setPhotosData(newPhotosData);
+    let newLikedPhotos = {...likedPhotos};
+    newLikedPhotos[id] = newLikedPhotos[id] ? false : true;
+    setLikedPhotos(newLikedPhotos);
   }
-
 
   const intitialState = {empty: true};
   const [displayPhotoDetails, setDisplayPhotoDetails] = useState(intitialState);
@@ -34,13 +30,14 @@ const App = () => {
       setDisplayPhotoDetails(intitialState);
     }
   }
-
+   
   return (
     <div className="App">
-      <HomeRoute setDisplayModel={setDisplayModel} photos={photosData} toggleLikedPhoto={toggleLikedPhoto}/>
+      <HomeRoute setDisplayModel={setDisplayModel} photos={photosData} toggleLikedPhoto={toggleLikedPhoto} likedPhotos={likedPhotos} />
       {!displayPhotoDetails.empty && <PhotoDetailsModel 
         photos={photosData}
         photoDetailId={displayPhotoDetails.photoDetailsId} 
+        likedPhotos={likedPhotos}
         setDisplayModel={() => setDisplayModel()} 
         toggleLikedPhoto={toggleLikedPhoto}
       />}

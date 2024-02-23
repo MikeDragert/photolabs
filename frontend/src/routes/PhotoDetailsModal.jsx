@@ -10,14 +10,6 @@ const PhotoDetailsModal = (props) => {
     return photo.id === props.photoDetailId
   });
 
-  //I'm not sure why, but passing in just the displayPhoto.similar_photos didn't update the liked button on click.
-  //  BUT it does if we re-lookup each similar photo from the original photos list
-  let similarPhotos = props.photos.filter((photo) => {
-    return Object.values(displayPhoto.similar_photos).find((similarPhoto) => {
-      return similarPhoto.id === photo.id
-    })
-  });
-
   return (
     <article className="photo-details-modal">
       <button className="photo-details-modal__close-button" onClick={props.setDisplayModel}>
@@ -25,7 +17,7 @@ const PhotoDetailsModal = (props) => {
       </button>
       
       <div className='photo-details-modal__images'>
-        <PhotoFavButton selected={displayPhoto.liked} toggleLikedPhoto={() => props.toggleLikedPhoto(displayPhoto.id)}/>
+        <PhotoFavButton selected={props.likedPhotos[displayPhoto.id]} toggleLikedPhoto={() => props.toggleLikedPhoto(displayPhoto.id)}/>
         <img src={displayPhoto.urls.full} alt="image" className='photo-details-modal__image' />
         <div className="photo-details-modal__photographer-details">
           <img src={displayPhoto.user.profile} alt="profile image" className="photo-details-modal__photographer-profile" />
@@ -38,7 +30,7 @@ const PhotoDetailsModal = (props) => {
           <h1>Similar Photos</h1>
         </div>
         <div className='photo-details-modal__images'>
-          <PhotoList photos={similarPhotos} toggleLikedPhoto={props.toggleLikedPhoto} />
+          <PhotoList photos={Object.values(displayPhoto.similar_photos)} toggleLikedPhoto={props.toggleLikedPhoto} likedPhotos={props.likedPhotos} />
         </div>
       </div>
     </article>
