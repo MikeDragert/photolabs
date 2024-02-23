@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import photos from '../mocks/photos';
 
 // Note: Rendering a single component to build components in isolation
