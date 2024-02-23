@@ -21,9 +21,10 @@ const PhotoDetailsModal = (props) => {
         <img src={displayPhoto.urls.full} alt="image" className='photo-details-modal__image' />
         <div className="photo-details-modal__photographer-details">
           <img src={displayPhoto.user.profile} alt="profile image" className="photo-details-modal__photographer-profile" />
-          <div>
-            <p className="photo-details-modal__photographer-info">{displayPhoto.user.username}</p>
-            <p className="photo-details-modal__photographer-location">{displayPhoto.location.city}, {displayPhoto.location.country}</p>
+          <div className="photo-details-modal__photographer-info">
+            <span>{displayPhoto.user.username}</span>
+            <br />
+            <span className="photo-details-modal__photographer-location">{displayPhoto.location.city}, {displayPhoto.location.country}</span>
           </div>
         </div>
         <div className='photo-details-modal__header'>

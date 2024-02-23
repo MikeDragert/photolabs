@@ -10,12 +10,13 @@ const PhotoListItem = (props) => {
       <img src={props.photoItem.urls.regular} alt="image" className="photo-list__image" onClick={() => props.setDisplayModel(props.photoItem.id)}/>
       <div className="photo-list__user-details">
         <img src={props.photoItem.user.profile} alt="profile image" className="photo-list__user-profile" />
-        <div>
-          <p className="photo-list__user-info">{props.photoItem.user.username}</p>
-          <p className="photo-list__user-location ">{props.photoItem.location.city}, {props.photoItem.location.country}</p>
+        <div className="photo-list__user-info">
+          <span >{props.photoItem.user.username}</span>
+          <br />
+          <span className="photo-list__user-location ">{props.photoItem.location.city}, {props.photoItem.location.country}</span>
         </div>
       </div>
-  </article>
+    </article>
   );
 };
 
