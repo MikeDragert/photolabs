@@ -1,20 +1,21 @@
-import { useReducer, useState } from 'react';
-import photos from '../mocks/photos';
+import { useReducer, useEffect } from 'react';
+
 
 const ACTIONS = {
   UPDATEFAVPHOTOS: "UpdateFavPhotos", 
-  SETPHOTOSELECTED: "SetPhotoSelected"
+  SETPHOTOSELECTED: "SetPhotoSelected",
+  SETPHOTODATA: "SetPhotoData",
+  SETTOPICDATA: "SetTopicData"
 }
 
 // Note: Rendering a single component to build components in isolation
 const useApplicationData = () => {  
 
-  const initialPhotos = [...photos];
-
   const initialState = {
-    photos: [...photos],
     likedPhotos: {},
-    photoSelected: undefined
+    photoSelected: undefined,
+    photoData: [],
+    topicData: []
   }
 
   const reducer = function(state, action) {
@@ -27,6 +28,12 @@ const useApplicationData = () => {
         return newState;
       case ACTIONS.SETPHOTOSELECTED:
         newState.photoSelected = action.value;
+        return newState;
+      case ACTIONS.SETPHOTODATA:
+        newState.photoData = action.value;
+        return newState;
+      case ACTIONS.SETTOPICDATA:
+        newState.topicData = action.value;
         return newState;
       default:
         return newState;
@@ -47,6 +54,24 @@ const useApplicationData = () => {
     dispatch({type: ACTIONS.SETPHOTOSELECTED, value: undefined})
   }
    
+  useEffect(() => {
+    fetch('/api/photos')
+      .then((response) => response.json())
+      .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
+      .catch((error) =>  {
+        console.log(error);
+      })
+  }, [])
+
+  useEffect(() => {
+    fetch('/api/topics')
+      .then((response) => response.json())
+      .then((data) => dispatch({type: ACTIONS.SETTOPICDATA, value: data}))
+      .catch((error) =>  {
+        console.log(error);
+      })
+  }, [])
+
   return {
     state,
     updateToFavPhotoIds,
