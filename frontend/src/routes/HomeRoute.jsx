@@ -9,7 +9,7 @@ import '../styles/HomeRoute.scss';
 const HomeRoute = (props) => {
   return (
     <div className="home-route">
-      <TopNavigation state={props.state} />
+      <TopNavigation state={props.state} getPhotosForTopic={props.getPhotosForTopic} />
       <PhotoList {...props} />
     </div>
   );

@@ -72,11 +72,21 @@ const useApplicationData = () => {
       })
   }, [])
 
+  const getPhotosForTopic = function(topicId) {
+    fetch(`/api/topics/photos/${topicId}`)
+      .then((response) => response.json())
+      .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
+      .catch((error) =>  {
+        console.log(error);
+      })
+  }
+
   return {
     state,
     updateToFavPhotoIds,
     setPhotoSelected,
-    onClosePhotoDetailsModal
+    onClosePhotoDetailsModal,
+    getPhotosForTopic
   }
 };
 
