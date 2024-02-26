@@ -41,3 +41,9 @@ npm start
 - sass: ^1.59
 
 ## Screenshots
+
+[PhotoLabs Start Page] (https://github.com/MikeDragert/photolabs/blob/main/documentation/PhotoLabs%20-%20Start.png)
+[PhotoLabs Nature Selected](https://github.com/MikeDragert/photolabs/blob/main/documentation/PhotoLabs%20-%20nature.png)
+[PhotoLabs Liked](https://github.com/MikeDragert/photolabs/blob/main/documentation/PhotoLabs%20-%20some%20liked.png)
+[PhotoLabs Photo Details](https://github.com/MikeDragert/photolabs/blob/main/documentation/PhotoLabs%20-%20Photo%20detail.png)
+[PhotoLabs Photo Details Similar photos](https://github.com/MikeDragert/photolabs/blob/main/documentation/PhotoLabs%20-%20Photo%20detail%20Similar.png)
