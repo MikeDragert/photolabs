@@ -7,13 +7,13 @@ import useApplicationData from 'hooks/useApplicationData';
 import './App.scss';
 import './styles/HomeRoute.scss'
 
-// Note: Rendering a single component to build components in isolation
+//create main app react object
 const App = () => {  
-  const { state, updateToFavPhotoIds, setPhotoSelected, onClosePhotoDetailsModal, getPhotosForTopic } = useApplicationData();
+  const { state, updateToFavPhotoIds, setPhotoSelected, onClosePhotoDetailsModal, getAllPhotoData, getPhotosForTopic } = useApplicationData();
    
   return (
     <div className="App">
-      <HomeRoute state={state} setPhotoSelected={setPhotoSelected} updateToFavPhotoIds={updateToFavPhotoIds} getPhotosForTopic={getPhotosForTopic} />
+      <HomeRoute state={state} setPhotoSelected={setPhotoSelected} updateToFavPhotoIds={updateToFavPhotoIds} getAllPhotoData={getAllPhotoData} getPhotosForTopic={getPhotosForTopic} />
       {state.photoSelected && <PhotoDetailsModel 
         state={state}
         onClosePhotoDetailsModal={onClosePhotoDetailsModal} 

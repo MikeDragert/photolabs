@@ -1,23 +1,22 @@
 import { useReducer, useEffect } from 'react';
 
-
 const ACTIONS = {
   UPDATEFAVPHOTOS: "UpdateFavPhotos", 
   SETPHOTOSELECTED: "SetPhotoSelected",
   SETPHOTODATA: "SetPhotoData",
   SETTOPICDATA: "SetTopicData"
-}
+};
 
-// Note: Rendering a single component to build components in isolation
+//main application funcitonality
 const useApplicationData = () => {  
-
   const initialState = {
     likedPhotos: {},
     photoSelected: undefined,
     photoData: [],
     topicData: []
-  }
+  };
 
+  //state reducer for managing data
   const reducer = function(state, action) {
     let newState = {...state};
     switch (action.type) {
@@ -38,31 +37,50 @@ const useApplicationData = () => {
       default:
         return newState;
       }
-  }
+  };
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [state, dispatch] = useReducer(reducer, initialState)
-
+  //toggle favourite for given photo id
   const updateToFavPhotoIds = function(id) {
     dispatch({type: ACTIONS.UPDATEFAVPHOTOS, value: id});
   }
 
+  //select photo by id to show detailed view
   const setPhotoSelected = function(photoDetailsId) {
-    dispatch({type: ACTIONS.SETPHOTOSELECTED, value: photoDetailsId})
+    dispatch({type: ACTIONS.SETPHOTOSELECTED, value: photoDetailsId});
   }
   
+  //unselect the selected photo to close the detailed view
   const onClosePhotoDetailsModal = function() {
-    dispatch({type: ACTIONS.SETPHOTOSELECTED, value: undefined})
+    dispatch({type: ACTIONS.SETPHOTOSELECTED, value: undefined});
   }
-   
-  useEffect(() => {
+
+  //get ALL photo data
+  const getAllPhotoData = function () {
     fetch('/api/photos')
       .then((response) => response.json())
       .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
       .catch((error) =>  {
         console.log(error);
-      })
-  }, [])
+      });
+  };
 
+  //get photo data for specified topic id
+  const getPhotosForTopic = function(topicId) {
+    fetch(`/api/topics/photos/${topicId}`)
+      .then((response) => response.json())
+      .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
+      .catch((error) =>  {
+        console.log(error);
+      });
+  };
+   
+  //get all photo data after render
+  useEffect(() => {
+    getAllPhotoData();
+  }, []);
+
+  //get all topic data after render
   useEffect(() => {
     fetch('/api/topics')
       .then((response) => response.json())
@@ -70,24 +88,16 @@ const useApplicationData = () => {
       .catch((error) =>  {
         console.log(error);
       })
-  }, [])
-
-  const getPhotosForTopic = function(topicId) {
-    fetch(`/api/topics/photos/${topicId}`)
-      .then((response) => response.json())
-      .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
-      .catch((error) =>  {
-        console.log(error);
-      })
-  }
+  }, []);
 
   return {
     state,
     updateToFavPhotoIds,
     setPhotoSelected,
     onClosePhotoDetailsModal,
+    getAllPhotoData,
     getPhotosForTopic
-  }
+  };
 };
 
 export default useApplicationData;

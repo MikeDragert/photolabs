@@ -3,6 +3,7 @@ import React from "react";
 import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
+// react component for displaying one photo item
 const PhotoListItem = (props) => {
   return (
     <article key={props.photoItem.id} className="photo-list__item" >

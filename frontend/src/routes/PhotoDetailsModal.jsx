@@ -5,8 +5,9 @@ import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoFavButton from '../components/PhotoFavButton';
 import PhotoList from '../components/PhotoList';
 
+//route to create detailed modal for selected picture
 const PhotoDetailsModal = (props) => {
-  let displayPhoto = props.state.photos.find((photo) => {
+  let displayPhoto = props.state.photoData.find((photo) => {
     return photo.id === props.state.photoSelected
   });
 
@@ -35,7 +36,7 @@ const PhotoDetailsModal = (props) => {
         </div>
       </div>
     </article>
-  )
+  );
 };
 
 export default PhotoDetailsModal;
