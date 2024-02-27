@@ -18,6 +18,7 @@ const App = () => {
         state={state}
         onClosePhotoDetailsModal={onClosePhotoDetailsModal} 
         updateToFavPhotoIds={updateToFavPhotoIds}
+        setPhotoSelected={setPhotoSelected}
       />}
     </div>
   );

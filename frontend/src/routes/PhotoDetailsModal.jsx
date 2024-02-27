@@ -32,7 +32,7 @@ const PhotoDetailsModal = (props) => {
           <h1>Similar Photos</h1>
         </div>
         <div className='photo-details-modal__images'>
-          <PhotoList state={props.state} updateToFavPhotoIds={props.updateToFavPhotoIds} setPhotoSelected={() => {}} />
+          <PhotoList state={props.state} updateToFavPhotoIds={props.updateToFavPhotoIds} setPhotoSelected={props.setPhotoSelected} />
         </div>
       </div>
     </article>
