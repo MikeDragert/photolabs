@@ -4,7 +4,10 @@ const ACTIONS = {
   UPDATEFAVPHOTOS: "UpdateFavPhotos", 
   SETPHOTOSELECTED: "SetPhotoSelected",
   SETPHOTODATA: "SetPhotoData",
-  SETTOPICDATA: "SetTopicData"
+  SETTOPICDATA: "SetTopicData",
+  UPDATESEARCH: "UpdateSearch",
+  CLEARSEARCH: "ClearSearch",
+  CLEARSEARCHBLOCK: "ClearSearchBlock"
 };
 
 //main application funcitonality
@@ -13,7 +16,9 @@ const useApplicationData = () => {
     likedPhotos: {},
     photoSelected: undefined,
     photoData: [],
-    topicData: []
+    topicData: [],
+    searchString: '',
+    blockSearchRefresh: false
   };
 
   //state reducer for managing data
@@ -33,6 +38,16 @@ const useApplicationData = () => {
         return newState;
       case ACTIONS.SETTOPICDATA:
         newState.topicData = action.value;
+        return newState;
+      case ACTIONS.UPDATESEARCH:
+        newState.searchString = action.value;
+        return newState;
+      case ACTIONS.CLEARSEARCH:
+        newState.searchString = '';
+        newState.blockSearchRefresh = true;
+        return newState;
+      case ACTIONS.CLEARSEARCHBLOCK:
+        newState.blockSearchRefresh = false;
         return newState;
       default:
         return newState;
@@ -55,11 +70,26 @@ const useApplicationData = () => {
     dispatch({type: ACTIONS.SETPHOTOSELECTED, value: undefined});
   }
 
+  const onSearchChange = function(newSearch) {
+    dispatch({type: ACTIONS.UPDATESEARCH, value: newSearch});
+  }
+
+  const checkPhotoData = function(data) {
+    if (data) {
+      return data;
+    } else {
+      return [];
+    }
+  }
+
   //get ALL photo data
   const getAllPhotoData = function () {
     fetch('/api/photos')
       .then((response) => response.json())
-      .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
+      .then((data) => {
+        dispatch({type: ACTIONS.CLEARSEARCH});
+        return dispatch({type: ACTIONS.SETPHOTODATA, value: checkPhotoData(data)});
+      })
       .catch((error) =>  {
         console.log(error);
       });
@@ -69,7 +99,23 @@ const useApplicationData = () => {
   const getPhotosForTopic = function(topicId) {
     fetch(`/api/topics/photos/${topicId}`)
       .then((response) => response.json())
-      .then((data) => dispatch({type: ACTIONS.SETPHOTODATA, value: data}))
+      .then((data) => {
+        dispatch({type: ACTIONS.CLEARSEARCH});
+        return dispatch({type: ACTIONS.SETPHOTODATA, value: checkPhotoData(data)});
+      })
+      .catch((error) =>  {
+        console.log(error);
+      });
+  };
+
+  const getPhotosForSearch = function() {
+    fetch(`/api/photos/${state.searchString}`)
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+      dispatch({type: ACTIONS.SETPHOTODATA, value: checkPhotoData(data)})}
+      )
       .catch((error) =>  {
         console.log(error);
       });
@@ -90,11 +136,28 @@ const useApplicationData = () => {
       })
   }, []);
 
+  useEffect(() => {
+    if (state.blockSearchRefresh) {
+      dispatch({type: ACTIONS.CLEARSEARCHBLOCK});
+    } else {
+      const searchWait = setTimeout(() => {
+        if (state.searchString.length > 0) {
+          getPhotosForSearch();
+        } else {
+          getAllPhotoData();
+        }
+      }, 1000);
+
+      return () => clearTimeout(searchWait);
+    }
+  }, [state.searchString]);
+
   return {
     state,
     updateToFavPhotoIds,
     setPhotoSelected,
     onClosePhotoDetailsModal,
+    onSearchChange,
     getAllPhotoData,
     getPhotosForTopic
   };

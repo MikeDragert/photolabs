@@ -9,11 +9,11 @@ import './styles/HomeRoute.scss'
 
 //create main app react object
 const App = () => {  
-  const { state, updateToFavPhotoIds, setPhotoSelected, onClosePhotoDetailsModal, getAllPhotoData, getPhotosForTopic } = useApplicationData();
+  const { state, updateToFavPhotoIds, setPhotoSelected, onClosePhotoDetailsModal, onSearchChange, getAllPhotoData, getPhotosForTopic } = useApplicationData();
    
   return (
     <div className="App">
-      <HomeRoute state={state} setPhotoSelected={setPhotoSelected} updateToFavPhotoIds={updateToFavPhotoIds} getAllPhotoData={getAllPhotoData} getPhotosForTopic={getPhotosForTopic} />
+      <HomeRoute state={state} setPhotoSelected={setPhotoSelected} updateToFavPhotoIds={updateToFavPhotoIds} getAllPhotoData={getAllPhotoData} getPhotosForTopic={getPhotosForTopic} onSearchChange={onSearchChange} />
       {state.photoSelected && <PhotoDetailsModel 
         state={state}
         onClosePhotoDetailsModal={onClosePhotoDetailsModal} 

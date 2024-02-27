@@ -14,7 +14,7 @@ const PhotoList = (props) => {
       setPhotoSelected={props.setPhotoSelected}
     />
   }); 
-  
+
   return (
     <ul className="photo-list">
       {photoList}
