@@ -11,6 +11,7 @@ const PhotoDetailsModal = (props) => {
     return photo.id === props.state.photoSelected
   });
 
+  console.log(displayPhoto)
   return (
     <article className="photo-details-modal">
       <button className="photo-details-modal__close-button" onClick={props.onClosePhotoDetailsModal}>
@@ -32,7 +33,7 @@ const PhotoDetailsModal = (props) => {
           <h1>Similar Photos</h1>
         </div>
         <div className='photo-details-modal__images'>
-          <PhotoList state={props.state} updateToFavPhotoIds={props.updateToFavPhotoIds} setPhotoSelected={props.setPhotoSelected} />
+          <PhotoList state={props.state} photoData={displayPhoto.similar_photos} updateToFavPhotoIds={props.updateToFavPhotoIds} setPhotoSelected={props.setPhotoSelected} />
         </div>
       </div>
     </article>

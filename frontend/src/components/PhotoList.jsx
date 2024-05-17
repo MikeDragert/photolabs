@@ -5,7 +5,7 @@ import PhotoListItem from "./PhotoListItem";
 
 //list of react photo components
 const PhotoList = (props) => {
-  const photoList = props.state.photoData.map((photo) => {
+  const photoList = props.photoData.map((photo) => {
     return <PhotoListItem 
       photoItem = {photo} 
       key={photo.id} 
